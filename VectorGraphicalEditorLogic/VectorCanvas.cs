@@ -89,18 +89,18 @@ namespace VectorGraphicalEditorUI
             }
             return (circleQty, trisQty);
         }
-        public void DeleteByIndex(uint index)
+        public void DeleteByIndex(int index)
         { if (index < _FiguresArray.Count)
-            {
-                for (uint i = index; i < _FiguresArray.Length - 1; i++)
-                    _FiguresArray[i] = _FiguresArray[i + 1];
-                Array.Resize(ref _FiguresArray, _FiguresArray.Length - 1);
-            }
-        else throw new SystemException("Invalid index to delete!");
+                _FiguresArray.RemoveAt(index);
+            else throw new SystemException("Invalid index to delete!");
         }
-        public Figure Return1 (uint index)
+        public Figure Return1 (int index)
         {
-            return _FiguresArray[index];
+            return _FiguresArray.ElementAt(index);
+        }
+        public List<Figure> ReturnAllFigures()
+        {
+            return _FiguresArray;
         }
         public void ShiftAll(int shiftOx, int shiftOy)
         {

@@ -6,7 +6,7 @@
         xmlns:sys="clr-namespace:System;assembly=mscorlib" 
         xmlns:local="clr-namespace:VectorGraphicalEditorUI"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800" ResizeMode="NoResize" Background="#333333">
+        Title="VectorGraphicalEditorUI" Height="450" Width="800" ResizeMode="NoResize" Background="#333333">
     
     <Window.Resources>
         <ObjectDataProvider
@@ -36,11 +36,11 @@
                 <TextBlock FontWeight="Bold" Text="Shape Properties" Foreground="#888888"/>
             <StackPanel Orientation="Horizontal">
                 <TextBlock Text="Shift X = " VerticalAlignment="Center" Margin="5" Foreground ="#888888" FontWeight="Bold"/>
-                <TextBox Name ="ShiftX" MinWidth="40" VerticalAlignment="Center"  Background="#444444" Foreground ="#888888" FontWeight="Bold"/>
+                <TextBox Name ="InputShiftX" MinWidth="40" VerticalAlignment="Center"  Background="#444444" Foreground ="#888888" FontWeight="Bold"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal">
                 <TextBlock Text="Shift Y = " Focusable="False" VerticalAlignment="Center"  Margin="5" Foreground ="#888888" FontWeight="Bold"/>
-                <TextBox Name ="ShiftY" MinWidth="40" VerticalAlignment="Center"  Background="#444444" Foreground ="#888888" FontWeight="Bold"/>
+                <TextBox Name ="InputShiftY" MinWidth="40" VerticalAlignment="Center"  Background="#444444" Foreground ="#888888" FontWeight="Bold"/>
             </StackPanel>
             <Button Name="ShiftOxOy" Content="Shift All Figures" Foreground="#888888" FontWeight="Bold" Background="#444444" Click="ShiftOxOy_Click"/>
         </ListBox>

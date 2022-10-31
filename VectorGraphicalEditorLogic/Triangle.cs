@@ -150,7 +150,7 @@ namespace VectorGraphicalEditorUI
         }
         public override string ToString()
         {
-            return "Triangle\nFirst Vertex: " + FirstVertex + ";\nSecond Vertex: " + SecondVertex + ";\nThird Vertex: " + ThirdVertex + ";\nFill: " + _FillColor + "; Contour: " +_ContourColor + "\n";
+            return "Triangle\nFirst Vertex: " + FirstVertex + ";\nSecond Vertex: " + SecondVertex + ";\nThird Vertex: " + ThirdVertex + ";\nFill: " + _FillColor + "; Contour: " +_ContourColor + ";\nArea: " + Math.Round(SquareCalculate(), 3) + " quadratic units;\nPerimeter: " + Math.Round(PerimeterCalculate(), 3) + " units\n";
         }
     }
 }

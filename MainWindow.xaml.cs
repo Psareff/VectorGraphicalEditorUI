@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Diagnostics;
+using System.Windows.Documents.DocumentStructures;
 
 namespace VectorGraphicalEditorUI
 {
@@ -22,7 +23,7 @@ namespace VectorGraphicalEditorUI
 
     public partial class MainWindow : Window
     {
-        VectorCanvas canvas = new VectorCanvas();
+        VectorCanvas _VectorCanvas = new VectorCanvas();
         bool _isTriangleCreating = false;
         Color _contourColorOfFigure, _fillColorOfFigure;
         public MainWindow()
@@ -80,7 +81,12 @@ namespace VectorGraphicalEditorUI
 
         private void ShiftOxOy_Click(object sender, RoutedEventArgs e)
         {
-            VectorCanvas.ShiftAll();
+            Editor.Items.Clear();
+            int ShiftX = InputShiftX.Text == "" ? 0 : Convert.ToInt32(InputShiftX.Text);
+            int ShiftY = InputShiftY.Text == "" ? 0 : Convert.ToInt32(InputShiftY.Text);
+            _VectorCanvas.ShiftAll(Convert.ToInt32(ShiftX), Convert.ToInt32(ShiftY));
+            foreach (Figure f in _VectorCanvas.ReturnAllFigures())
+                Editor.Items.Add(f);
         }
 
         private void AddFigure_Click(object sender, RoutedEventArgs e)
@@ -91,20 +97,20 @@ namespace VectorGraphicalEditorUI
                                             (Convert.ToDouble(SecondVertexXCoordField.Text), Convert.ToDouble(SecondVertexYCoordField.Text)),
                                             (Convert.ToDouble(ThirdVertexXCoordField.Text), Convert.ToDouble(ThirdVertexYCoordField.Text)),
                                             _fillColorOfFigure, _contourColorOfFigure);
-                figures.Add(tr);
-                Editor.Items.Add(tr);
-                
+                _VectorCanvas.AddFigureToPainting(tr);                
             }
             else
             {
                 Circle cr = new Circle((Convert.ToDouble(CenterXCoordField.Text), Convert.ToDouble(CenterYCoordField.Text)),
                                         Convert.ToDouble(RadiusField.Text), 
                                         _fillColorOfFigure, _contourColorOfFigure);
-                figures.Add(cr);
-                Editor.Items.Add(cr);
+                _VectorCanvas.AddFigureToPainting(cr);
             }
                 _contourColorOfFigure = Color.Black;
                 _fillColorOfFigure = Color.Black;
+            Editor.Items.Clear();
+            foreach (Figure f in _VectorCanvas.ReturnAllFigures())
+                Editor.Items.Add(f);
         }
         
     }
