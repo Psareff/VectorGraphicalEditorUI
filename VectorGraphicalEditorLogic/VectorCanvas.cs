@@ -8,10 +8,10 @@ namespace VectorGraphicalEditorUI
 {
     public class VectorCanvas
     {
-        public double _CanvasHeight = 0;
-        public double _CanvasWidth = 0;
-        List<Figure> _FiguresArray = new List<Figure>();
+        private double _CanvasHeight = 0;
+        private double _CanvasWidth = 0;
 
+        List<Figure> _FiguresArray = new List<Figure>();
 
         public VectorCanvas()
         {
@@ -39,6 +39,7 @@ namespace VectorGraphicalEditorUI
         {
             get { return _CanvasWidth; }
         }
+
         public void AddFigureToPainting(Figure figure)
         {
             if (figure is null) throw new SystemException("Figure, pushed to adding op can't be null!");
@@ -94,7 +95,7 @@ namespace VectorGraphicalEditorUI
                 _FiguresArray.RemoveAt(index);
             else throw new SystemException("Invalid index to delete!");
         }
-        public Figure Return1 (int index)
+        public Figure ReturnIndividual (int index)
         {
             return _FiguresArray.ElementAt(index);
         }

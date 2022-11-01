@@ -6,9 +6,11 @@ using System.Threading.Tasks;
 
 namespace VectorGraphicalEditorUI
 {
-    public enum Color { Red, Green, Blue, Cyan, Magenta, Yellow, Black, White }
+    public enum Color { Red, Green, Blue, Cyan, Magenta, Yellow, Black, White}
+    [Serializable]
     public abstract class Figure
     {
+        
         public Color _FillColor;
         public Color _ContourColor;
 
@@ -29,8 +31,9 @@ namespace VectorGraphicalEditorUI
             set { _FillColor = value; }
         }
 
+
         public abstract double PerimeterCalculate();
-        public abstract double SquareCalculate();
+        public abstract double AreaCalculate();
         public abstract void ShiftOxOy((double, double) Shift);
         public abstract double RadiusCalc();
         public abstract (double, double) CenterCalc();

@@ -91,26 +91,36 @@ namespace VectorGraphicalEditorUI
 
         private void AddFigure_Click(object sender, RoutedEventArgs e)
         {
-            if (_isTriangleCreating)
+            try
             {
-                Triangle tr = new Triangle( (Convert.ToDouble(FirstVertexXCoordField.Text), Convert.ToDouble(FirstVertexYCoordField.Text)),
-                                            (Convert.ToDouble(SecondVertexXCoordField.Text), Convert.ToDouble(SecondVertexYCoordField.Text)),
-                                            (Convert.ToDouble(ThirdVertexXCoordField.Text), Convert.ToDouble(ThirdVertexYCoordField.Text)),
+                if (_isTriangleCreating)
+                {
+                    Triangle tr = new Triangle((Convert.ToDouble(FirstVertexXCoordField.Text), Convert.ToDouble(FirstVertexYCoordField.Text)),
+                                                (Convert.ToDouble(SecondVertexXCoordField.Text), Convert.ToDouble(SecondVertexYCoordField.Text)),
+                                                (Convert.ToDouble(ThirdVertexXCoordField.Text), Convert.ToDouble(ThirdVertexYCoordField.Text)),
+                                                _fillColorOfFigure, _contourColorOfFigure);
+                    _VectorCanvas.AddFigureToPainting(tr);
+                }
+                else
+                {
+                    Circle cr = new Circle((Convert.ToDouble(CenterXCoordField.Text), Convert.ToDouble(CenterYCoordField.Text)),
+                                            Convert.ToDouble(RadiusField.Text),
                                             _fillColorOfFigure, _contourColorOfFigure);
-                _VectorCanvas.AddFigureToPainting(tr);                
-            }
-            else
-            {
-                Circle cr = new Circle((Convert.ToDouble(CenterXCoordField.Text), Convert.ToDouble(CenterYCoordField.Text)),
-                                        Convert.ToDouble(RadiusField.Text), 
-                                        _fillColorOfFigure, _contourColorOfFigure);
-                _VectorCanvas.AddFigureToPainting(cr);
-            }
+                    _VectorCanvas.AddFigureToPainting(cr);
+                }
                 _contourColorOfFigure = Color.Black;
                 _fillColorOfFigure = Color.Black;
-            Editor.Items.Clear();
-            foreach (Figure f in _VectorCanvas.ReturnAllFigures())
-                Editor.Items.Add(f);
+                Editor.Items.Clear();
+                foreach (Figure f in _VectorCanvas.ReturnAllFigures())
+                    Editor.Items.Add(f);
+                CanvasWidthOutput.Text = Convert.ToString(_VectorCanvas.CanvasWidth);
+                CanvasHeightOutput.Text = Convert.ToString(_VectorCanvas.CanvasHeight);
+            }
+            catch (Exception ex)
+            {
+                MessageBoxButton button = MessageBoxButton.OK;
+                DialogResult.Show("Exception" + ex);
+                    }
         }
         
     }

@@ -34,7 +34,7 @@
         </ListBox>
         <ListBox Name="ShapeProperties" Grid.Column="1" Grid.Row="1" Background="#333333">
                 <TextBlock FontWeight="Bold" Text="Shape Properties" Foreground="#888888"/>
-            <StackPanel Orientation="Horizontal">
+            <StackPanel Orientation="Horizontal">   
                 <TextBlock Text="Shift X = " VerticalAlignment="Center" Margin="5" Foreground ="#888888" FontWeight="Bold"/>
                 <TextBox Name ="InputShiftX" MinWidth="40" VerticalAlignment="Center"  Background="#444444" Foreground ="#888888" FontWeight="Bold"/>
             </StackPanel>
@@ -43,6 +43,16 @@
                 <TextBox Name ="InputShiftY" MinWidth="40" VerticalAlignment="Center"  Background="#444444" Foreground ="#888888" FontWeight="Bold"/>
             </StackPanel>
             <Button Name="ShiftOxOy" Content="Shift All Figures" Foreground="#888888" FontWeight="Bold" Background="#444444" Click="ShiftOxOy_Click"/>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Canvas Width = " Focusable="False" VerticalAlignment="Center"  Margin="5" Foreground ="#888888" FontWeight="Bold"/>
+                <TextBlock Name ="CanvasWidthOutput" MinWidth="40" VerticalAlignment="Center"  Background="#333333" Foreground ="#888888" FontWeight="Bold"/>
+            </StackPanel>
+            <StackPanel  Orientation="Horizontal">
+
+            <TextBlock Text="Canvas Height = " Focusable="False" VerticalAlignment="Center"  Margin="5" Foreground ="#888888" FontWeight="Bold"/>
+                <TextBlock Name ="CanvasHeightOutput" MinWidth="40" VerticalAlignment="Center"  Background="#333333" Foreground ="#888888" FontWeight="Bold"/>
+                </StackPanel>
+
         </ListBox>
         <Grid Grid.Column="1" Grid.Row="0">
             <Grid.ColumnDefinitions>

@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="VectorGraphicalEditorUI.Circle">
+    <Position X="4.25" Y="5.25" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAIAAAAQABAAAQEAAAAAAEABCAAAAAAAIAAAAAIAAA=</HashCode>
+      <FileName>VectorGraphicalEditorLogic\Circle.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="VectorGraphicalEditorUI.Figure">
+    <Position X="5.75" Y="1.25" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAQABAAAQAAAAAAIAABAAAAAAAAIAAAQgAAAQ=</HashCode>
+      <FileName>VectorGraphicalEditorLogic\Figure.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="VectorGraphicalEditorUI.Triangle">
+    <Position X="6.75" Y="5.25" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AEQAAAAAQABAQAQEAAAAAEIABAAAAAAAAIAAQAEAAAA=</HashCode>
+      <FileName>VectorGraphicalEditorLogic\Triangle.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="VectorGraphicalEditorUI.VectorCanvas">
+    <Position X="8.25" Y="1" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAgAAgAAAAAwAAAEAAAgIAAAAEAAAAAAAAAIAOAAAAA=</HashCode>
+      <FileName>VectorGraphicalEditorLogic\VectorCanvas.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Enum Name="VectorGraphicalEditorUI.Color">
+    <Position X="3.5" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAGAAQAAAAAAgAAABAAAAAABAAAAAAAAAAAADAAAAA=</HashCode>
+      <FileName>VectorGraphicalEditorLogic\Figure.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

@@ -104,7 +104,7 @@ namespace VectorGraphicalEditorUI
             double thirdSideLength = SideLengthCalculate(SideCoordinatesCalculate(_ThirdVertex, _FirstVertex));
             return firstSideLength + secondSideLength + thirdSideLength;
         }
-        public override double SquareCalculate()
+        public override double AreaCalculate()
         {
             double firstSideLength = SideLengthCalculate(SideCoordinatesCalculate(_FirstVertex, _SecondVertex));
             double secondSideLength = SideLengthCalculate(SideCoordinatesCalculate(_SecondVertex, _ThirdVertex));
@@ -117,26 +117,26 @@ namespace VectorGraphicalEditorUI
             double firstSideLength = SideLengthCalculate(SideCoordinatesCalculate(_FirstVertex, _SecondVertex));
             double secondSideLength = SideLengthCalculate(SideCoordinatesCalculate(_SecondVertex, _ThirdVertex));
             double thirdSideLength = SideLengthCalculate(SideCoordinatesCalculate(_ThirdVertex, _FirstVertex));
-            return firstSideLength * secondSideLength * thirdSideLength / (4 * SquareCalculate());
+            return firstSideLength * secondSideLength * thirdSideLength / (4 * AreaCalculate());
         }
         public override (double, double) CenterCalc()
         {
-            (double, double) CircimscribedCircleCenter;
+            (double, double) CircumscribedCircleCenter;
             double D;
 
             D = 2 * (_FirstVertex.Item1 * (_SecondVertex.Item2 - _ThirdVertex.Item2) +
                 _SecondVertex.Item1 * (_ThirdVertex.Item2 - _FirstVertex.Item2) +
                 _ThirdVertex.Item1 * (_FirstVertex.Item2 - _SecondVertex.Item2));
 
-            CircimscribedCircleCenter.Item1 = (((Math.Pow(_FirstVertex.Item1, 2) + Math.Pow(_FirstVertex.Item2, 2)) * (_SecondVertex.Item2 - _ThirdVertex.Item2)) +
+            CircumscribedCircleCenter.Item1 = (((Math.Pow(_FirstVertex.Item1, 2) + Math.Pow(_FirstVertex.Item2, 2)) * (_SecondVertex.Item2 - _ThirdVertex.Item2)) +
                                               ((Math.Pow(_SecondVertex.Item1, 2) + Math.Pow(_SecondVertex.Item2, 2)) * (_ThirdVertex.Item2 - _FirstVertex.Item2)) +
                                               ((Math.Pow(_ThirdVertex.Item1, 2) + Math.Pow(_ThirdVertex.Item2, 2)) * (_FirstVertex.Item2 - _SecondVertex.Item2))) / D;
 
-            CircimscribedCircleCenter.Item2 = (((Math.Pow(_FirstVertex.Item1, 2) + Math.Pow(_FirstVertex.Item2, 2)) * (_ThirdVertex.Item1 - _SecondVertex.Item1)) +
+            CircumscribedCircleCenter.Item2 = (((Math.Pow(_FirstVertex.Item1, 2) + Math.Pow(_FirstVertex.Item2, 2)) * (_ThirdVertex.Item1 - _SecondVertex.Item1)) +
                                               ((Math.Pow(_SecondVertex.Item1, 2) + Math.Pow(_SecondVertex.Item2, 2)) * (_FirstVertex.Item1 - _ThirdVertex.Item1)) +
                                               ((Math.Pow(_ThirdVertex.Item1, 2) + Math.Pow(_ThirdVertex.Item2, 2)) * (_SecondVertex.Item1 - _FirstVertex.Item1))) / D;
 
-            return (CircimscribedCircleCenter.Item1, CircimscribedCircleCenter.Item2);
+            return (CircumscribedCircleCenter.Item1, CircumscribedCircleCenter.Item2);
 
         }
         public override void ShiftOxOy((double, double) Shift)
@@ -150,7 +150,7 @@ namespace VectorGraphicalEditorUI
         }
         public override string ToString()
         {
-            return "Triangle\nFirst Vertex: " + FirstVertex + ";\nSecond Vertex: " + SecondVertex + ";\nThird Vertex: " + ThirdVertex + ";\nFill: " + _FillColor + "; Contour: " +_ContourColor + ";\nArea: " + Math.Round(SquareCalculate(), 3) + " quadratic units;\nPerimeter: " + Math.Round(PerimeterCalculate(), 3) + " units\n";
+            return "Triangle\nFirst Vertex: " + FirstVertex + ";\nSecond Vertex: " + SecondVertex + ";\nThird Vertex: " + ThirdVertex + ";\nFill: " + _FillColor + "; Contour: " +_ContourColor + ";\nArea: " + Math.Round(AreaCalculate(), 3) + " quadratic units;\nPerimeter: " + Math.Round(PerimeterCalculate(), 3) + " units\n";
         }
     }
 }

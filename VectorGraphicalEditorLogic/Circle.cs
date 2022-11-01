@@ -51,7 +51,7 @@ namespace VectorGraphicalEditorUI
         {
             return 2 * Math.PI * _Radius;
         }
-        public override double SquareCalculate()
+        public override double AreaCalculate()
         {
             return Math.PI * Math.Pow(_Radius, 2);
         }
@@ -62,7 +62,7 @@ namespace VectorGraphicalEditorUI
         }
         public override string ToString()
         {
-            return "Circle\nCenter = " + _Center + "; Radius = " + Radius + ";\nFill: " + _FillColor + "; Contour: " + _ContourColor + "\nArea: " + Math.Round(SquareCalculate(), 3) + " quadratic units;\nPerimeter: " + Math.Round(PerimeterCalculate(), 3) + " units\n";
+            return "Circle\nCenter = " + _Center + "; Radius = " + Radius + ";\nFill: " + _FillColor + "; Contour: " + _ContourColor + "\nArea: " + Math.Round(AreaCalculate(), 3) + " quadratic units;\nPerimeter: " + Math.Round(PerimeterCalculate(), 3) + " units\n";
         }
     }
 }
