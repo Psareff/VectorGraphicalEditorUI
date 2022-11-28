@@ -97,10 +97,11 @@ namespace VectorGraphicalEditorUI
 
         private void Save_Click(object sender, RoutedEventArgs e)
         {
-            SaveFileDialog fileDialog = new SaveFileDialog();
-            fileDialog.DefaultExt = ".xml";
-            fileDialog.ShowDialog();
-            string path = fileDialog.FileName;
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.DefaultExt = ".xml";
+            saveFileDialog.Filter = "XML Database (*.xml)|*.xml";
+            saveFileDialog.ShowDialog();
+            string path = saveFileDialog.FileName;
 
             XmlSerializer xs = new XmlSerializer(typeof(List<Figure>));
             using (XmlWriter writer = XmlWriter.Create(path))
@@ -110,6 +111,7 @@ namespace VectorGraphicalEditorUI
 
         private void Load_Click(object sender, RoutedEventArgs e)
         {
+            Editor.Items.Clear();
             OpenFileDialog openFileDialog = new OpenFileDialog();
             openFileDialog.Filter = "XML Database (*.xml)|*.xml";
             openFileDialog.ShowDialog();
@@ -118,10 +120,14 @@ namespace VectorGraphicalEditorUI
             using (XmlReader writer = XmlReader.Create(path))
                 _VectorCanvas.FiguresArray = (List<Figure>)xs.Deserialize(writer);
             foreach (Figure f in _VectorCanvas.FiguresArray)
+            {
                 Editor.Items.Add(f);
+            }
+            _VectorCanvas.CalculateHeightAndWidthOfCanvas();
             CanvasWidthOutput.Text = Convert.ToString(_VectorCanvas.CanvasWidth);
             CanvasHeightOutput.Text = Convert.ToString(_VectorCanvas.CanvasHeight);
         }
+
 
         private void AddFigure_Click(object sender, RoutedEventArgs e)
         {

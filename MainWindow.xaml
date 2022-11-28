@@ -34,9 +34,9 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
 
-        <ListBox Name ="Editor" Grid.RowSpan="2" Background="#333333" Foreground="#888888" FontWeight="Bold">
-            <TextBlock FontWeight="Bold" Text="VectorGraphicalEditor" Foreground="#888888"/>
-        </ListBox>
+        <ListBox Name ="Editor" Grid.RowSpan="2" Background="#333333" Foreground="#888888" FontWeight="Bold" ScrollViewer.VerticalScrollBarVisibility="Visible" Height="410"> 
+                <TextBlock FontWeight="Bold" Text="VectorGraphicalEditor" Foreground="#888888"/>
+            </ListBox>
         <ListBox Name="ShapeProperties" Grid.Column="1" Grid.Row="1" Background="#333333">
                 <TextBlock FontWeight="Bold" Text="Shape Properties" Foreground="#888888"/>
             <StackPanel Orientation="Horizontal">   
