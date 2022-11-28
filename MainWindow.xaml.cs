@@ -14,6 +14,9 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Diagnostics;
 using System.Windows.Documents.DocumentStructures;
+using Microsoft.Win32;
+using System.IO;
+using System.Text.Json;
 
 namespace VectorGraphicalEditorUI
 {
@@ -89,21 +92,35 @@ namespace VectorGraphicalEditorUI
                 Editor.Items.Add(f);
         }
 
+        private void Save_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog fileDialog = new OpenFileDialog();
+            fileDialog.ShowDialog();
+            string path = fileDialog.FileName;
+            StringBuilder serializedFiguresArray = new StringBuilder();
+            serializedFiguresArray = FiguresArray;
+            using (StreamWriter sw = new StreamWriter(path))
+            {
+                sw.WriteLine(serializedFiguresArray);
+                Trace.WriteLine(serializedFiguresArray);
+            }
+        }
+
         private void AddFigure_Click(object sender, RoutedEventArgs e)
         {
             try
             {
                 if (_isTriangleCreating)
                 {
-                    Triangle tr = new Triangle((Convert.ToDouble(FirstVertexXCoordField.Text), Convert.ToDouble(FirstVertexYCoordField.Text)),
-                                                (Convert.ToDouble(SecondVertexXCoordField.Text), Convert.ToDouble(SecondVertexYCoordField.Text)),
-                                                (Convert.ToDouble(ThirdVertexXCoordField.Text), Convert.ToDouble(ThirdVertexYCoordField.Text)),
+                    Triangle tr = new Triangle(new Point(Convert.ToDouble(FirstVertexXCoordField.Text), Convert.ToDouble(FirstVertexYCoordField.Text)),
+                                                new Point(Convert.ToDouble(SecondVertexXCoordField.Text), Convert.ToDouble(SecondVertexYCoordField.Text)),
+                                                new Point(Convert.ToDouble(ThirdVertexXCoordField.Text), Convert.ToDouble(ThirdVertexYCoordField.Text)),
                                                 _fillColorOfFigure, _contourColorOfFigure);
                     _VectorCanvas.AddFigureToPainting(tr);
                 }
                 else
                 {
-                    Circle cr = new Circle((Convert.ToDouble(CenterXCoordField.Text), Convert.ToDouble(CenterYCoordField.Text)),
+                    Circle cr = new Circle(new Point(Convert.ToDouble(CenterXCoordField.Text), Convert.ToDouble(CenterYCoordField.Text)),
                                             Convert.ToDouble(RadiusField.Text),
                                             _fillColorOfFigure, _contourColorOfFigure);
                     _VectorCanvas.AddFigureToPainting(cr);
@@ -118,9 +135,8 @@ namespace VectorGraphicalEditorUI
             }
             catch (Exception ex)
             {
-                MessageBoxButton button = MessageBoxButton.OK;
-                DialogResult.Show("Exception" + ex);
-                    }
+                MessageBox.Show("Unable to create figure, try again." + ex, "Creating error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
         
     }

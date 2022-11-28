@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace VectorGraphicalEditorUI
 {
@@ -18,6 +20,10 @@ namespace VectorGraphicalEditorUI
             _CanvasHeight = 0;
             _CanvasWidth = 0;
         }
+        public string Serialize()
+            => JsonSerializer.Serialize(this);
+        public Figure Deserialize(string json)
+            => JsonSerializer.Deserialize<Figure>(json);
         public VectorCanvas(Figure figure)
         {
             if (figure is null) throw new SystemException("Figure, pushed to constructor can't be null!");
@@ -54,8 +60,8 @@ namespace VectorGraphicalEditorUI
         {
             foreach (Figure figureIterator in _FiguresArray)
             {
-                double widthBuffer = (figureIterator.RadiusCalc() + Math.Abs(figureIterator.CenterCalc().Item1)) * 2;
-                double heightBuffer = (figureIterator.RadiusCalc() + Math.Abs(figureIterator.CenterCalc().Item2)) * 2;
+                double widthBuffer = (figureIterator.RadiusCalc() + Math.Abs(figureIterator.CenterCalc().X)) * 2;
+                double heightBuffer = (figureIterator.RadiusCalc() + Math.Abs(figureIterator.CenterCalc().Y)) * 2;
                 if (heightBuffer > _CanvasHeight)
                     _CanvasHeight = heightBuffer;
                 if (widthBuffer > _CanvasWidth)
@@ -71,8 +77,8 @@ namespace VectorGraphicalEditorUI
                     _FiguresArray.Add(f);
                 foreach (Figure figureIterator in _FiguresArray)
                 {
-                    double widthBuffer = (figureIterator.RadiusCalc() + Math.Abs(figureIterator.CenterCalc().Item1)) * 2;
-                    double heightBuffer = (figureIterator.RadiusCalc() + Math.Abs(figureIterator.CenterCalc().Item2)) * 2;
+                    double widthBuffer = (figureIterator.RadiusCalc() + Math.Abs(figureIterator.CenterCalc().X)) * 2;
+                    double heightBuffer = (figureIterator.RadiusCalc() + Math.Abs(figureIterator.CenterCalc().Y)) * 2;
                     if (heightBuffer > _CanvasHeight)
                         _CanvasHeight = heightBuffer;
                     if (widthBuffer > _CanvasWidth)
@@ -107,10 +113,13 @@ namespace VectorGraphicalEditorUI
         {
             foreach (Figure figureIterator in _FiguresArray)
             {
-                figureIterator.ShiftOxOy((shiftOx, shiftOy));
+                figureIterator.ShiftOxOy(new Point(shiftOx, shiftOy));
             }
         }
 
-
+        public List<Figure>FiguresArray
+        {
+            get => _FiguresArray;
+        }
     }
 }

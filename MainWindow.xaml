@@ -18,7 +18,12 @@
             </ObjectDataProvider.MethodParameters>
         </ObjectDataProvider>
     </Window.Resources>
-    
+    <StackPanel Orientation="Vertical">
+        
+    <StackPanel Orientation="Horizontal">
+            <Button Name="Save" Height="25" Width="100" Content="Save" Foreground="#888888" FontWeight="Bold" Background="#444444" Margin="0,0,5,0" Click="Save_Click"/>
+            <Button Name="Load" Height="25" Width="100" Content="Load" Foreground="#888888" FontWeight="Bold" Background="#444444"/>
+        </StackPanel>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
@@ -154,4 +159,5 @@
             <Button Name ="AddFigure" Content="Add Figure" Grid.Row="6" Grid.ColumnSpan="2" Width="150" Height="25" Click="AddFigure_Click" Foreground="#888888" FontWeight="Bold" Background="#444444"/>
         </Grid>
     </Grid>
+    </StackPanel>
 </Window>

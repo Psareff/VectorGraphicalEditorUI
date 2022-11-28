@@ -2,17 +2,21 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace VectorGraphicalEditorUI
 {
+    [Serializable]
+
     public class Triangle : Figure
     {
-        internal (double, double) _FirstVertex;
-        internal (double, double) _SecondVertex;
-        internal (double, double) _ThirdVertex;
+        public Point _FirstVertex;
+        public Point _SecondVertex;
+        public Point _ThirdVertex;
 
-        public  (double, double) FirstVertex
+        public  Point FirstVertex
         {
             get { return _FirstVertex; }
             set 
@@ -28,7 +32,7 @@ namespace VectorGraphicalEditorUI
                 else throw new SystemException("Invalid vertex pushed!");
             }
         }
-        public  (double, double) SecondVertex
+        public  Point SecondVertex
         {
             get { return _SecondVertex; }
             set 
@@ -45,7 +49,7 @@ namespace VectorGraphicalEditorUI
 
             }
         }
-        public (double, double) ThirdVertex
+        public Point ThirdVertex
         {
             get { return _ThirdVertex; }
             set 
@@ -66,12 +70,12 @@ namespace VectorGraphicalEditorUI
 
         public Triangle() : base(Color.White, Color.White)
         {
-            _FirstVertex = (0, 0);
-            _SecondVertex = (1, 0);
-            _ThirdVertex = (0, 1);
+            _FirstVertex = new Point(0, 0);
+            _SecondVertex = new Point (1, 0);
+            _ThirdVertex = new Point (0, 1);
         }
 
-        public Triangle((double, double) Vertex1, (double, double) Vertex2, (double, double) Vertex3, Color FillColor, Color ContourColor) : base(FillColor, ContourColor)
+        public Triangle(Point Vertex1, Point Vertex2, Point Vertex3, Color FillColor, Color ContourColor) : base(FillColor, ContourColor)
         {
             double firstSideLength = SideLengthCalculate(SideCoordinatesCalculate(Vertex1, Vertex2));
             double secondSideLength = SideLengthCalculate(SideCoordinatesCalculate(Vertex2, Vertex3));
@@ -89,13 +93,13 @@ namespace VectorGraphicalEditorUI
             ContourColor = Color.White;
         }
 
-        (double, double) SideCoordinatesCalculate((double, double) Vertex1, (double, double) Vertex2)
+        Point SideCoordinatesCalculate(Point Vertex1, Point Vertex2)
         {
-            return (Vertex2.Item1 - Vertex1.Item1, Vertex2.Item2 - Vertex1.Item2);
+            return new Point(Vertex2.X - Vertex1.X, Vertex2.Y - Vertex1.Y);
         }
-        double SideLengthCalculate((double, double) Side)
+        double SideLengthCalculate(Point Side)
         {
-            return Math.Sqrt(Math.Pow(Side.Item1, 2) + Math.Pow(Side.Item2, 2));
+            return Math.Sqrt(Math.Pow(Side.X, 2) + Math.Pow(Side.Y, 2));
         }
         public override double PerimeterCalculate()
         {
@@ -119,38 +123,43 @@ namespace VectorGraphicalEditorUI
             double thirdSideLength = SideLengthCalculate(SideCoordinatesCalculate(_ThirdVertex, _FirstVertex));
             return firstSideLength * secondSideLength * thirdSideLength / (4 * AreaCalculate());
         }
-        public override (double, double) CenterCalc()
+        public override Point CenterCalc()
         {
-            (double, double) CircumscribedCircleCenter;
+            Point CircumscribedCircleCenter;
             double D;
 
-            D = 2 * (_FirstVertex.Item1 * (_SecondVertex.Item2 - _ThirdVertex.Item2) +
-                _SecondVertex.Item1 * (_ThirdVertex.Item2 - _FirstVertex.Item2) +
-                _ThirdVertex.Item1 * (_FirstVertex.Item2 - _SecondVertex.Item2));
+            D = 2 * (_FirstVertex.X * (_SecondVertex.Y - _ThirdVertex.Y) +
+                _SecondVertex.X * (_ThirdVertex.Y - _FirstVertex.Y) +
+                _ThirdVertex.X * (_FirstVertex.Y - _SecondVertex.Y));
 
-            CircumscribedCircleCenter.Item1 = (((Math.Pow(_FirstVertex.Item1, 2) + Math.Pow(_FirstVertex.Item2, 2)) * (_SecondVertex.Item2 - _ThirdVertex.Item2)) +
-                                              ((Math.Pow(_SecondVertex.Item1, 2) + Math.Pow(_SecondVertex.Item2, 2)) * (_ThirdVertex.Item2 - _FirstVertex.Item2)) +
-                                              ((Math.Pow(_ThirdVertex.Item1, 2) + Math.Pow(_ThirdVertex.Item2, 2)) * (_FirstVertex.Item2 - _SecondVertex.Item2))) / D;
+            CircumscribedCircleCenter.X = (((Math.Pow(_FirstVertex.X, 2) + Math.Pow(_FirstVertex.Y, 2)) * (_SecondVertex.Y - _ThirdVertex.Y)) +
+                                              ((Math.Pow(_SecondVertex.X, 2) + Math.Pow(_SecondVertex.Y, 2)) * (_ThirdVertex.Y - _FirstVertex.Y)) +
+                                              ((Math.Pow(_ThirdVertex.X, 2) + Math.Pow(_ThirdVertex.Y, 2)) * (_FirstVertex.Y - _SecondVertex.Y))) / D;
 
-            CircumscribedCircleCenter.Item2 = (((Math.Pow(_FirstVertex.Item1, 2) + Math.Pow(_FirstVertex.Item2, 2)) * (_ThirdVertex.Item1 - _SecondVertex.Item1)) +
-                                              ((Math.Pow(_SecondVertex.Item1, 2) + Math.Pow(_SecondVertex.Item2, 2)) * (_FirstVertex.Item1 - _ThirdVertex.Item1)) +
-                                              ((Math.Pow(_ThirdVertex.Item1, 2) + Math.Pow(_ThirdVertex.Item2, 2)) * (_SecondVertex.Item1 - _FirstVertex.Item1))) / D;
+            CircumscribedCircleCenter.Y = (((Math.Pow(_FirstVertex.X, 2) + Math.Pow(_FirstVertex.Y, 2)) * (_ThirdVertex.X - _SecondVertex.X)) +
+                                              ((Math.Pow(_SecondVertex.X, 2) + Math.Pow(_SecondVertex.Y, 2)) * (_FirstVertex.X - _ThirdVertex.X)) +
+                                              ((Math.Pow(_ThirdVertex.X, 2) + Math.Pow(_ThirdVertex.Y, 2)) * (_SecondVertex.X - _FirstVertex.X))) / D;
 
-            return (CircumscribedCircleCenter.Item1, CircumscribedCircleCenter.Item2);
+            return new Point(CircumscribedCircleCenter.X, CircumscribedCircleCenter.Y);
 
         }
-        public override void ShiftOxOy((double, double) Shift)
+        public override void ShiftOxOy(Point Shift)
         {
-            _FirstVertex.Item1 += Shift.Item1;
-            _FirstVertex.Item2 += Shift.Item2;
-            _SecondVertex.Item1 += Shift.Item1;
-            _SecondVertex.Item2 += Shift.Item2;
-            _ThirdVertex.Item1 += Shift.Item1;
-            _ThirdVertex.Item2 += Shift.Item2;
+            _FirstVertex.X += Shift.X;
+            _FirstVertex.Y+= Shift.Y;
+            _SecondVertex.X+= Shift.X;
+            _SecondVertex.Y+= Shift.Y;
+            _ThirdVertex.X+= Shift.X;
+            _ThirdVertex.Y+= Shift.Y;
         }
         public override string ToString()
         {
             return "Triangle\nFirst Vertex: " + FirstVertex + ";\nSecond Vertex: " + SecondVertex + ";\nThird Vertex: " + ThirdVertex + ";\nFill: " + _FillColor + "; Contour: " +_ContourColor + ";\nArea: " + Math.Round(AreaCalculate(), 3) + " quadratic units;\nPerimeter: " + Math.Round(PerimeterCalculate(), 3) + " units\n";
         }
+
+        public string Serialize()
+            => JsonSerializer.Serialize(this);
+        public Figure Deserialize(string json)
+            => JsonSerializer.Deserialize<Figure>(json);
     }
 }

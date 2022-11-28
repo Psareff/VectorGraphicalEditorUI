@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace VectorGraphicalEditorUI
 {
@@ -12,7 +14,7 @@ namespace VectorGraphicalEditorUI
     {
         
         public Color _FillColor;
-        public Color _ContourColor;
+        public   Color _ContourColor;
 
         public Figure(Color FillColor, Color ContourColor)
         {
@@ -34,8 +36,9 @@ namespace VectorGraphicalEditorUI
 
         public abstract double PerimeterCalculate();
         public abstract double AreaCalculate();
-        public abstract void ShiftOxOy((double, double) Shift);
+        public abstract void ShiftOxOy(Point Shift);
         public abstract double RadiusCalc();
-        public abstract (double, double) CenterCalc();
+        public abstract Point CenterCalc();
+
     }
 }
