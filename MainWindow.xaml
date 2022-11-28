@@ -22,7 +22,7 @@
         
     <StackPanel Orientation="Horizontal">
             <Button Name="Save" Height="25" Width="100" Content="Save" Foreground="#888888" FontWeight="Bold" Background="#444444" Margin="0,0,5,0" Click="Save_Click"/>
-            <Button Name="Load" Height="25" Width="100" Content="Load" Foreground="#888888" FontWeight="Bold" Background="#444444"/>
+            <Button Name="Load" Height="25" Width="100" Content="Load" Foreground="#888888" FontWeight="Bold" Background="#444444" Click="Load_Click"/>
         </StackPanel>
     <Grid>
         <Grid.ColumnDefinitions>

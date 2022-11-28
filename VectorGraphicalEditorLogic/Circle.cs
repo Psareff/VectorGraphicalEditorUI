@@ -9,7 +9,7 @@ using System.Windows;
 namespace VectorGraphicalEditorUI
 {
     [Serializable]
-    internal class Circle : Figure
+    public class Circle : Figure
     {
         public Point _Center;
         public double _Radius;

@@ -17,6 +17,9 @@ using System.Windows.Documents.DocumentStructures;
 using Microsoft.Win32;
 using System.IO;
 using System.Text.Json;
+using System.Xml.Serialization;
+using System.Xml;
+
 
 namespace VectorGraphicalEditorUI
 {
@@ -88,22 +91,36 @@ namespace VectorGraphicalEditorUI
             int ShiftX = InputShiftX.Text == "" ? 0 : Convert.ToInt32(InputShiftX.Text);
             int ShiftY = InputShiftY.Text == "" ? 0 : Convert.ToInt32(InputShiftY.Text);
             _VectorCanvas.ShiftAll(Convert.ToInt32(ShiftX), Convert.ToInt32(ShiftY));
-            foreach (Figure f in _VectorCanvas.ReturnAllFigures())
+            foreach (Figure f in _VectorCanvas.FiguresArray)
                 Editor.Items.Add(f);
         }
 
         private void Save_Click(object sender, RoutedEventArgs e)
         {
-            OpenFileDialog fileDialog = new OpenFileDialog();
+            SaveFileDialog fileDialog = new SaveFileDialog();
+            fileDialog.DefaultExt = ".xml";
             fileDialog.ShowDialog();
             string path = fileDialog.FileName;
-            StringBuilder serializedFiguresArray = new StringBuilder();
-            serializedFiguresArray = FiguresArray;
-            using (StreamWriter sw = new StreamWriter(path))
-            {
-                sw.WriteLine(serializedFiguresArray);
-                Trace.WriteLine(serializedFiguresArray);
-            }
+
+            XmlSerializer xs = new XmlSerializer(typeof(List<Figure>));
+            using (XmlWriter writer = XmlWriter.Create(path))
+                    xs.Serialize(writer, _VectorCanvas.FiguresArray);
+
+        }
+
+        private void Load_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "XML Database (*.xml)|*.xml";
+            openFileDialog.ShowDialog();
+            string path = openFileDialog.FileName;
+            XmlSerializer xs = new XmlSerializer(typeof(List<Figure>));
+            using (XmlReader writer = XmlReader.Create(path))
+                _VectorCanvas.FiguresArray = (List<Figure>)xs.Deserialize(writer);
+            foreach (Figure f in _VectorCanvas.FiguresArray)
+                Editor.Items.Add(f);
+            CanvasWidthOutput.Text = Convert.ToString(_VectorCanvas.CanvasWidth);
+            CanvasHeightOutput.Text = Convert.ToString(_VectorCanvas.CanvasHeight);
         }
 
         private void AddFigure_Click(object sender, RoutedEventArgs e)
@@ -128,7 +145,7 @@ namespace VectorGraphicalEditorUI
                 _contourColorOfFigure = Color.Black;
                 _fillColorOfFigure = Color.Black;
                 Editor.Items.Clear();
-                foreach (Figure f in _VectorCanvas.ReturnAllFigures())
+                foreach (Figure f in _VectorCanvas.FiguresArray)
                     Editor.Items.Add(f);
                 CanvasWidthOutput.Text = Convert.ToString(_VectorCanvas.CanvasWidth);
                 CanvasHeightOutput.Text = Convert.ToString(_VectorCanvas.CanvasHeight);

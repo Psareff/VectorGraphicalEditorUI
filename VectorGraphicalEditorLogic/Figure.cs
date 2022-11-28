@@ -5,11 +5,14 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Xml;
+using System.Xml.Serialization;
 
 namespace VectorGraphicalEditorUI
 {
     public enum Color { Red, Green, Blue, Cyan, Magenta, Yellow, Black, White}
-    [Serializable]
+    [XmlInclude(typeof(Triangle))]
+    [XmlInclude(typeof(Circle))]
     public abstract class Figure
     {
         

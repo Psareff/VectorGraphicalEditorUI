@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Text.Json;
+using System.Xml;
 using System.Threading.Tasks;
 using System.Windows;
 
@@ -20,10 +20,6 @@ namespace VectorGraphicalEditorUI
             _CanvasHeight = 0;
             _CanvasWidth = 0;
         }
-        public string Serialize()
-            => JsonSerializer.Serialize(this);
-        public Figure Deserialize(string json)
-            => JsonSerializer.Deserialize<Figure>(json);
         public VectorCanvas(Figure figure)
         {
             if (figure is null) throw new SystemException("Figure, pushed to constructor can't be null!");
@@ -35,7 +31,7 @@ namespace VectorGraphicalEditorUI
         {
             foreach (Figure f in figures)
                 _FiguresArray.Add(f);
-            DefineHeightAndWidthOfCanvas();
+            CalculateHeightAndWidthOfCanvas();
         }
         public double CanvasHeight
         {
@@ -52,11 +48,11 @@ namespace VectorGraphicalEditorUI
             else
             {
                 _FiguresArray.Add(figure);
-                DefineHeightAndWidthOfCanvas();
+                CalculateHeightAndWidthOfCanvas();
 
             }
         }
-        public void DefineHeightAndWidthOfCanvas()
+        public void CalculateHeightAndWidthOfCanvas()
         {
             foreach (Figure figureIterator in _FiguresArray)
             {
@@ -105,10 +101,6 @@ namespace VectorGraphicalEditorUI
         {
             return _FiguresArray.ElementAt(index);
         }
-        public List<Figure> ReturnAllFigures()
-        {
-            return _FiguresArray;
-        }
         public void ShiftAll(int shiftOx, int shiftOy)
         {
             foreach (Figure figureIterator in _FiguresArray)
@@ -120,6 +112,7 @@ namespace VectorGraphicalEditorUI
         public List<Figure>FiguresArray
         {
             get => _FiguresArray;
+            set => _FiguresArray = value;
         }
     }
 }
